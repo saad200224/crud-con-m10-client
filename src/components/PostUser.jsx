@@ -1,6 +1,8 @@
+import axios from "axios";
+
 const PostUser = () => {
 
-    const handlePostUser = (e) => {
+    const handlePostUser = async (e) => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
@@ -16,16 +18,27 @@ const PostUser = () => {
         }
         console.log(formData)
 
-        fetch('http://localhost:5000/users', {
-            method: "POST",
-            headers: {
-                "content-type" : "application/json"
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => { 
-                console.log(data) })
+        // fetch('http://localhost:5000/users', {
+        //     method: "POST",
+        //     headers: {
+        //         "content-type" : "application/json"
+        //     },
+        //     body: JSON.stringify(formData)
+        // })
+        //     .then(res => res.json())
+        //     .then(data => { 
+        //         console.log(data) })
+
+        try{
+            const response = await axios.post("http://localhost:5000/users", formData, {
+                headers: {
+                            "content-type" : "application/json"
+                        },
+            });
+            console.log(response.data)
+        } catch(error){
+            console.log(error)
+        }
 
 
     }
